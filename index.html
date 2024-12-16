@@ -4,70 +4,99 @@
 
   <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-      <title>Processing Demo</title>
+      <title>Flappy Bird</title>
       <script type="text/javascript" src="js/processing.js"></script>
   </head>
   
   <body>
-    <h1>Granada High Tutorial</h1>
+    <h1>Test</h1>
     <p>Processing demo</p>
     
     <script type="text/processing">
 
       //SAMPLE PROCESSING CODE -- ENDS LINE 71
-      Ball[] ball;
+import processing.sound.*;
+SoundFile song;
+PImage icon, pipeT, pipeB, bg, bg2;
+int score;
+int bgx, bgy;
+int y, Vy;
+int px, py;
+boolean gameState;
+ 
+void setup(){
+  size(1000,849);
+  bg = loadImage("1625708175-horizontal symmetry (1).png");
+  y = 0;
+  Vy = 0;
+  icon = loadImage("mao.png");
+  px = width;
+  py = int(random(200, height-200));
+  pipeT = loadImage("kk.png");
+  pipeB = loadImage("kk2.png");
+  gameState = true;
+  song();
+}
 
-      void setup(){
-        size(700, 600);
-        frameRate(100);
-        ball = new Ball[100];
-        for(int i = 0; i < ball.length; i++){
-            ball[i] = new Ball();
-        }
-      }
+void scoreboard(){
+  textSize(200);
+  text("Score: " + score, 100, 100);
+  
+}
+void draw(){
+  if(gameState){
+    mainBG();
+    icon();
+    drawPipes();
+    checkCrash();
+    scoreboard();
+  }
+}
+ 
+void checkCrash(){
+  if(px < 75 + icon.width && px > 25 && y - py > 100){
+    gameState = false;
+  }
+  if(px < 75 + icon.width && px > 25 && py - y > 100){
+    gameState = false;
+  }
+}
+void mousePressed(){
+  Vy = -13;
+}
+ 
+void drawPipes(){
+  px = px - 3;
+  image(pipeT, px-25, py-pipeT.height-100);
+  image(pipeB, px-25, py+225);
+  if(px < -50){
+    px = width + 50;
+    py = int(random(100,height-100));
+    score++; 
+  }
+}
+ 
+void icon(){
+  image(icon, 50, y);
+  y += Vy;
+  Vy++;
+  if(y > height-icon.height){
+    y = height-icon.height;
+  }
+}
+void mainBG(){
+  image(bg,bgx,bgy);
+  image(bg, bgx + bg.width, bgy);
+  bgx = bgx-1;
+  if(bgx<-bg.width){
+    bgx=0;
+  }
+}
 
-
-
-      void draw(){
-          background(155,0,0);
-            for(int i = 0; i < ball.length; i++){
-                ball[i].display();
-            }
-
-      }
-      class Ball{
-
-          float x;
-          float y;
-          float Vx;
-          float Vy;
-          float r,g,b,o;
-          float d;
-
-          Ball(){
-              x = random(width);
-              y = random(height);
-              Vx = random(-5,5);
-              Vy = random(-5,5);
-              r = random(255);
-              g = random(255);
-              b = random(255);
-              o = random(255);
-              d = random(30) + 15;
-          }
-
-          void display(){
-              fill(r,g,b,o);
-              ellipse(x,y,d,d);
-              x += Vx;
-              y += Vy;
-              if(x > width || x < 0){
-                  Vx *= -1;
-              }
-              if(y > height || y < 0){
-                  Vy *= -1;
-              }
-          }
+void song(){
+  song = new SoundFile(this, "songMAO.mp3");
+  song.play();
+}
     }  //END SAMPLE CODE
 
 
