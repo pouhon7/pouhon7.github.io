@@ -15,88 +15,88 @@
     <script type="text/processing">
 
       //SAMPLE PROCESSING CODE -- ENDS LINE 71
-import processing.sound.*;
-SoundFile song;
-PImage icon, pipeT, pipeB, bg, bg2;
-int score;
-int bgx, bgy;
-int y, Vy;
-int px, py;
-boolean gameState;
- 
-void setup(){
-  size(1000,849);
-  bg = loadImage("1625708175-horizontal symmetry (1).png");
-  y = 0;
-  Vy = 0;
-  icon = loadImage("mao.png");
-  px = width;
-  py = int(random(200, height-200));
-  pipeT = loadImage("kk.png");
-  pipeB = loadImage("kk2.png");
-  gameState = true;
-  song();
-}
-
-void scoreboard(){
-  textSize(200);
-  text("Score: " + score, 100, 100);
-  
-}
-void draw(){
-  if(gameState){
-    mainBG();
-    icon();
-    drawPipes();
-    checkCrash();
-    scoreboard();
-  }
-}
- 
-void checkCrash(){
-  if(px < 75 + icon.width && px > 25 && y - py > 100){
-    gameState = false;
-  }
-  if(px < 75 + icon.width && px > 25 && py - y > 100){
-    gameState = false;
-  }
-}
-void mousePressed(){
-  Vy = -13;
-}
- 
-void drawPipes(){
-  px = px - 3;
-  image(pipeT, px-25, py-pipeT.height-100);
-  image(pipeB, px-25, py+225);
-  if(px < -50){
-    px = width + 50;
-    py = int(random(100,height-100));
-    score++; 
-  }
-}
- 
-void icon(){
-  image(icon, 50, y);
-  y += Vy;
-  Vy++;
-  if(y > height-icon.height){
-    y = height-icon.height;
-  }
-}
-void mainBG(){
-  image(bg,bgx,bgy);
-  image(bg, bgx + bg.width, bgy);
-  bgx = bgx-1;
-  if(bgx<-bg.width){
-    bgx=0;
-  }
-}
-
-void song(){
-  song = new SoundFile(this, "songMAO.mp3");
-  song.play();
-}
+      import processing.sound.*;
+      SoundFile song;
+      PImage icon, pipeT, pipeB, bg, bg2;
+      int score;
+      int bgx, bgy;
+      int y, Vy;
+      int px, py;
+      boolean gameState;
+       
+      void setup(){
+        size(1000,849);
+        bg = loadImage("1625708175-horizontal symmetry (1).png");
+        y = 0;
+        Vy = 0;
+        icon = loadImage("mao.png");
+        px = width;
+        py = int(random(200, height-200));
+        pipeT = loadImage("kk.png");
+        pipeB = loadImage("kk2.png");
+        gameState = true;
+        song();
+      }
+      
+      void scoreboard(){
+        textSize(200);
+        text("Score: " + score, 100, 100);
+        
+      }
+      void draw(){
+        if(gameState){
+          mainBG();
+          icon();
+          drawPipes();
+          checkCrash();
+          scoreboard();
+        }
+      }
+       
+      void checkCrash(){
+        if(px < 75 + icon.width && px > 25 && y - py > 100){
+          gameState = false;
+        }
+        if(px < 75 + icon.width && px > 25 && py - y > 100){
+          gameState = false;
+        }
+      }
+      void mousePressed(){
+        Vy = -13;
+      }
+       
+      void drawPipes(){
+        px = px - 3;
+        image(pipeT, px-25, py-pipeT.height-100);
+        image(pipeB, px-25, py+225);
+        if(px < -50){
+          px = width + 50;
+          py = int(random(100,height-100));
+          score++; 
+        }
+      }
+       
+      void icon(){
+        image(icon, 50, y);
+        y += Vy;
+        Vy++;
+        if(y > height-icon.height){
+          y = height-icon.height;
+        }
+      }
+      void mainBG(){
+        image(bg,bgx,bgy);
+        image(bg, bgx + bg.width, bgy);
+        bgx = bgx-1;
+        if(bgx<-bg.width){
+          bgx=0;
+        }
+      }
+      
+      void song(){
+        song = new SoundFile(this, "songMAO.mp3");
+        song.play();
+      }
     }  //END SAMPLE CODE
 
 
